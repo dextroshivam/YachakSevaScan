@@ -1,4 +1,4 @@
-package com.yourname.yss.Service;
+package com.yourname.yss.Config;
 
 import com.yourname.yss.Entity.User;
 import com.yourname.yss.Repository.UserRepository;
