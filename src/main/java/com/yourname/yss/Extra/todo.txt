@@ -1,0 +1,4 @@
+1. do css with file switching instead of in file style tag
+2. do form action for contact us and support
+3. do exception handling
+4. apply validations while taking inputs

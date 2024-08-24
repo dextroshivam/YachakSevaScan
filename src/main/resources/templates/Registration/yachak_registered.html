@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yachak Registration</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background-color: #ffd700;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease-in;
+        }
+
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .header .logo img {
+            width: 120px;
+            border-radius: 50%;
+        }
+
+        .header .header-text h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            color: #050505;
+        }
+
+        .nav-menu ul {
+            display: flex;
+            list-style: none;
+            margin-left: 0;
+            padding: 0;
+        }
+
+        .nav-menu ul li {
+            margin: 0 15px;
+        }
+
+        .nav-menu ul li a {
+            color: #333;
+            text-decoration: none;
+            font-weight: 700;
+            transition: color 0.3s;
+            border: 1px solid black;
+            border-radius: 20%;
+            padding: 10px;
+        }
+
+        .nav-menu ul li a:hover {
+            color: #d4af37;
+            background-color: black;
+            color: white;
+        }
+
+        .container1 {
+            text-align: center;
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+            margin: 40px auto 0;
+            animation: fadeIn 1s ease-in-out;
+            height: 50vh;
+        }
+
+        .container1 h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #d4af37;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .container1 p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: #666;
+        }
+
+        .container1 .yss-id {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #333;
+            background-color: #ffeb3b;
+            padding: 10px;
+            border-radius: 5px;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #ffd700;
+            color: #333;
+            padding: 12px 20px;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+            cursor: pointer;
+            border: none;
+        }
+
+        .btn:hover {
+            background-color: #000000;
+            color: #fff;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .footer {
+            background-color: #ffd700;
+            padding: 20px 0;
+            text-align: center;
+            margin-top: 40px;
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+        }
+
+        .footer .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .footer .footer-menu ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        .footer .footer-menu ul li {
+            margin: 0 15px;
+        }
+
+        .footer .footer-menu ul li a {
+            color: #333;
+            text-decoration: none;
+            font-weight: 700;
+            transition: color 0.3s;
+        }
+
+        .footer .footer-menu ul li a:hover {
+            color: #d4af37;
+        }
+
+        .footer .social-links a {
+            margin: 0 10px;
+            display: inline-block;
+        }
+
+        .footer .social-links img {
+            width: 30px;
+        }
+
+        .footer p {
+            margin: 0;
+            font-size: 1rem;
+            color: #333;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+
+    </style>
+</head>
+<body>
+<header class="header">
+    <div class="container">
+        <div class="logo">
+            <img
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7SgcUDZXu9F07FZT4BVNAygtBYS8CGzW_sk5GNeZGKIPmo0DZ4B5S-E4HZydBPyRrLY4&usqp=CAU"
+                    alt="Yachak Seva Scan">
+        </div>
+        <div class="header-text">
+            <h1>Yachak Registration</h1>
+        </div>
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="#" th:href="@{/}">Home</a></li>
+                <li><a href="#" th:href="@{/public/about}">About
+                    Us</a></li>
+                <li><a href="#"
+                       th:href="@{/public/contact}">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main>
+
+    <div class="container1" th:object="${yssId}">
+        <h1>Registration Successful!</h1>
+        <p>Your unique YSS ID is:</p>
+        <div class="yss-id" th:text="${yssId}"></div>
+        <!-- Replace DONXXXXXXX with dynamic YSS ID -->
+        <p>Please use this ID to log in to your account.</p>
+        <button class="btn" onclick="redirectToLogin()">Go to Login
+            Page
+        </button>
+    </div>
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-menu">
+            <ul>
+                <li><a href="#" th:href="@{/public/privacy}">Privacy
+                    Policy</a></li>
+                <li><a href="#" th:href="@{/public/terms}">Terms of
+                    Service</a></li>
+                <li><a href="#"
+                       th:href="@{/public/support}">Support</a></li>
+            </ul>
+        </div>
+        <div class="social-links">
+            <a href="#" target="_blank"><img
+                    src="https://cdn1.iconfinder.com/data/icons/social-media-rounded-corners/512/Rounded_Facebook_svg-64.png"
+                    alt="Facebook"></a>
+            <a href="#" target="_blank"><img
+                    src="https://cdn1.iconfinder.com/data/icons/social-media-rounded-corners/512/Rounded_Twitter5_svg-64.png"
+                    alt="Twitter"></a>
+            <a href="#" target="_blank"><img
+                    src="https://cdn3.iconfinder.com/data/icons/social-round-corner/512/linkdin__social_media_logo-64.png"
+                    alt="LinkedIn"></a>
+        </div>
+        <p>&copy; 2024 Yachak Seva Scan. All rights reserved.</p>
+    </div>
+</footer>
+<script>
+    function redirectToLogin() {
+        window.location.href = '/login/yachak'; // Update the URL as per your project structure
+    }
+</script>
+
+</body>
+</html>

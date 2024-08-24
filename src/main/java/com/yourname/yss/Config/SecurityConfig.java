@@ -23,9 +23,9 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
-
-    @Autowired
-    private CustomUserDetailsService userDetailsService;
+//
+//    @Autowired
+//    private CustomUserDetailsService userDetailsService;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -36,7 +36,7 @@ public class SecurityConfig {
                                 .requestMatchers("/yachaks/**").hasRole("YACHAK")
                                 .requestMatchers("/donors/**").hasRole("DONOR")
                                 .requestMatchers("/super-admin/**").hasRole("SUPER_ADMIN")
-                                .requestMatchers("/public/**", "/resources/**", "/login", "/", "/home").permitAll()
+                                .requestMatchers("/public/**", "/register/**", "/login/**", "/", "/home").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .formLogin(formLogin ->
@@ -53,19 +53,19 @@ public class SecurityConfig {
         return http.build();
     }
 
-    @Bean
-    public UserDetailsService userDetailsService() {
-//        PasswordEncoder encoder = new BCryptPasswordEncoder();
+//    @Bean
+//    public UserDetailsService userDetailsService() {
+////        PasswordEncoder encoder = new BCryptPasswordEncoder();
+////
+////        UserDetails user = User.builder()
+////                .username("customUser")
+////                .password(encoder.encode("customPassword"))
+////                .roles("YACHAK")
+////                .build();
 //
-//        UserDetails user = User.builder()
-//                .username("customUser")
-//                .password(encoder.encode("customPassword"))
-//                .roles("YACHAK")
-//                .build();
-
-//        return new InMemoryUserDetailsManager(user);
-        return new CustomUserDetailsService();
-    }
+////        return new InMemoryUserDetailsManager(user);
+//        return new CustomUserDetailsService();
+//    }
 
 
     @Bean
@@ -73,12 +73,12 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public DaoAuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService);
-        authProvider.setPasswordEncoder(passwordEncoder());
-        return authProvider;
-    }
+//    @Bean
+//    public DaoAuthenticationProvider authenticationProvider() {
+//        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+//        authProvider.setUserDetailsService(userDetailsService);
+//        authProvider.setPasswordEncoder(passwordEncoder());
+//        return authProvider;
+//    }
 }
 

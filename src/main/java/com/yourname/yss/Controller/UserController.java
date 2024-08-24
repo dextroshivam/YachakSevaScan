@@ -2,14 +2,11 @@
 //
 //import com.yourname.yss.DTO.RequestDTO.UserRequestDTO;
 //import com.yourname.yss.DTO.ResponseDTO.UserResponseDTO;
-//import com.yourname.yss.Entity.User;
 //import com.yourname.yss.Service.UserService;
 //import lombok.RequiredArgsConstructor;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.http.ResponseEntity;
 //import org.springframework.web.bind.annotation.*;
-//
-//import java.util.Optional;
 //
 //@RestController
 //@RequestMapping("/users")
@@ -19,7 +16,7 @@
 //    @Autowired
 //    private final UserService userService;
 //
-//    @PostMapping("/register")
+//    @PostMapping("public/register")
 //    public ResponseEntity<UserResponseDTO> registerUser(@RequestBody UserRequestDTO userRequestDto) {
 //        UserResponseDTO createdUser = userService.registerUser(userRequestDto);
 //        return ResponseEntity.ok(createdUser);

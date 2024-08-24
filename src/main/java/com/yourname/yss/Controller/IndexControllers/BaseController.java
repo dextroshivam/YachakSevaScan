@@ -1,4 +1,4 @@
-package com.yourname.yss.Controller;
+package com.yourname.yss.Controller.IndexControllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +25,6 @@ public class BaseController {
 //    }
     @RequestMapping("/")
     public RedirectView index() {
-        return new RedirectView("/home");
+        return new RedirectView("public/home");
     }
 }
