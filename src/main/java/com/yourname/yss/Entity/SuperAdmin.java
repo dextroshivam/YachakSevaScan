@@ -1,12 +1,9 @@
 package com.yourname.yss.Entity;
 
-import jakarta.persistence.Column;
+import com.yourname.yss.Enum.UserRole;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,6 +19,8 @@ public class SuperAdmin {
     @NotBlank
     @Column(name = "yss_id", unique = true)
     private String yssId;
+    @Enumerated(EnumType.STRING)
+    private UserRole role = UserRole.SUPER_ADMIN;
 
     private String username;
     private String email;

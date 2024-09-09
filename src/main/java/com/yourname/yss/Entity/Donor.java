@@ -1,5 +1,6 @@
 package com.yourname.yss.Entity;
 
+import com.yourname.yss.Enum.UserRole;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -47,6 +48,8 @@ public class Donor {
 
     @NotBlank
     private String password;
+    @Enumerated(EnumType.STRING)
+    private UserRole role = UserRole.DONOR;
 
 //    @OneToMany(mappedBy = "yachak")
 //    private Set<Transaction> transactions;

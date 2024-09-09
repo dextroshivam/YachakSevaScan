@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface DonorRepository extends JpaRepository<Donor, Long> {
     // Custom query methods can be added here if needed
     Optional<Donor> findByYssId(String yssId);
+
+    Optional<Donor> findByEmail(String email);
 }

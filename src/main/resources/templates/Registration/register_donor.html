@@ -102,6 +102,11 @@
             margin-right: 10px;
         }
 
+        #consent {
+            width: 25px;
+            height: 25px;
+        }
+
         .registration-form button {
             background-color: #ffd700;
             border: none;
@@ -272,9 +277,57 @@
             left: -10px; /* Adjust positioning as needed */
             top: 0;
         }
+
+        .pendulum {
+            position: absolute;
+            left: 20%;
+        }
+
+        .pendulum_box {
+            display: flex;
+            padding: 120px 0 0 10px;
+            position: absolute;
+            flex: 1;
+        }
+
+        .ball {
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+            background-color: #FF5C35;
+            position: relative;
+            transform-origin: 50% -300%;
+        }
+
+        .ball.first {
+            animation: firstball .9s alternate ease-in infinite;
+        }
+
+        @keyframes firstball {
+            0% {
+                transform: rotate(35deg);
+            }
+            50% {
+                transform: rotate(0deg);
+            }
+        }
+
+        .ball.last {
+            animation: lastball .9s alternate ease-out infinite;
+        }
+
+        @keyframes lastball {
+            50% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(-35deg);
+            }
+        }
+
     </style>
 </head>
-<body>
+<body id="body">
 <header class="header">
     <div class="container">
         <div class="logo">
@@ -302,33 +355,57 @@
     <div class="login-card">
         <h2>Already registered?</h2>
         <p>Click the button below to login.</p>
-        <button class="login-button" onclick="redirectToLogin()">Login Now
+        <button class="login-button" onclick="redirectToLogin()">Login
+            Now
         </button>
     </div>
+
+    <!--    spinner-->
+    <div class="pendulum" style="display: none">
+        <div class="pendulum_box">
+            <div class="ball first"></div>
+            <div class="ball"></div>
+            <div class="ball"></div>
+            <div class="ball"></div>
+            <div class="ball last"></div>
+        </div>
+    </div>
+
+    <!--    registration form-->
     <div class="registration-form">
-        <form id="donorForm" action th:action="@{/register/donorRegistered}"
-              method="post" th:object="${Donor}">
-            <label for="fullName" class="required-label">Full Name: </label>
+        <form id="donorForm" action
+              th:action="@{/register/donorRegistered}"
+              method="post" th:object="${donorRegistrationDEC}" onsubmit="activeLoader()">
+            <label for="fullName" class="required-label">Full Name:
+            </label>
             <input type="text" id="fullName" name="fullName" required
-                   th:value="${Donor.fullName}">
+                   th:value="${donorRegistrationDEC.donor.fullName}">
 
-            <label for="email" class="required-label">Email Address:</label>
+            <label for="email" class="required-label">Email
+                Address:</label>
             <input type="email" id="email" name="email" required
-                   th:value="${Donor.email}">
+                   th:value="${donorRegistrationDEC.getDonor().getEmail()}">
+            <!--            <span th:onblur="'removeError()'" id="errorMessage" style="color:red;"-->
+            <!--                  th:if="${donorRegistrationDEC.isEmailExist()}"-->
+            <!--                  th:text="${donorRegistrationDEC.emailError}"></span>-->
 
-            <label for="phoneNumber" class="required-label">Phone Number:</label>
-            <input type="tel" id="phoneNumber" name="phoneNumber"
-                   required th:value="${Donor.phoneNumber}">
 
-            <label for="dob" class="required-label">Date of Birth:</label>
+            <label for="phoneNumber" class="required-label">Phone
+                Number:</label>
+            <input type="text" id="phoneNumber" name="phoneNumber" pattern="[1-9]{1}[0-9]{9}"
+                   required th:value="${donorRegistrationDEC.getDonor().getPhoneNumber()}">
+
+            <label for="dob" class="required-label">Date of
+                Birth:</label>
             <input type="date" id="dob" name="dob" required
-                   th:value="${Donor.dob}">
+                   th:value="${donorRegistrationDEC.getDonor().getDob()}">
 
             <label for="address" class="required-label">Address:</label>
             <textarea id="address" name="address" rows="4" required
-                      th:value="${Donor.address}"></textarea>
+                      th:value="${donorRegistrationDEC.getDonor().getAddress()}"></textarea>
 
-            <label for="password" class="required-label">Password:</label>
+            <label for="password"
+                   class="required-label">Password:</label>
             <input type="password" id="password" name="password"
                    required>
 
@@ -341,7 +418,7 @@
                         Service</a>.</label>
             </div>
 
-            <button type="submit" style="color: black">Register</button>
+            <button type="submit" id="submit" style="color: black">Register</button>
             <button type="reset"
                     style="background-color: red; margin-top: 10px;color: black">Reset
             </button>
@@ -376,6 +453,7 @@
     </div>
 </footer>
 <script>
+
     document.addEventListener('DOMContentLoaded', function () {
         // Add an event listener to the form submission
         document.getElementById('donorForm').addEventListener('submit', function (event) {
@@ -389,8 +467,19 @@
         });
     });
 
+    function removeError() {
+        var element = document.getElementById("errorMessage");
+        element.style.display = "none";
+    }
+
+    function activeLoader() {
+        var submitbtn = document.getElementById("submit");
+        submitbtn.style.display = "none";
+    }
+
+
     function redirectToLogin() {
-        window.location.href = '/login/donor';
+        window.location.href = '/login/user';
     }
 </script>
 

@@ -9,6 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class SuperAdminLoginController {
     @GetMapping("/superadmin")
     public String loginSuperAdmin() {
-        return "login_superadmin";
+        return "/login/login_superadmin";
     }
 }

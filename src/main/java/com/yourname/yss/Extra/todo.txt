@@ -2,3 +2,6 @@
 2. do form action for contact us and support
 3. do exception handling
 4. apply validations while taking inputs
+5. add email functionality for registeration and also work on otp system
+6. Complete verification of sign up details by user(donor specially), otp on phone and verify other details.
+7. if already exists or not/ whether email exists or not

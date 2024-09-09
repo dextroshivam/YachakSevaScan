@@ -2,7 +2,7 @@ package com.yourname.yss.Controller.RegistrationControllers;
 
 import com.yourname.yss.Config.YssIdConfiguration;
 import com.yourname.yss.Entity.Donor;
-import com.yourname.yss.Entity.User;
+import com.yourname.yss.Entity.Users;
 import com.yourname.yss.Entity.Yachak;
 import com.yourname.yss.Enum.UserRole;
 import com.yourname.yss.Repository.YachakRepository;
@@ -10,6 +10,8 @@ import com.yourname.yss.Service.DonorService;
 import com.yourname.yss.Service.UserService;
 import com.yourname.yss.Service.YachakService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,6 +30,7 @@ public class YachakRegistrationController {
     @Autowired
     YssIdConfiguration yssIdConfiguration;
 
+
     @GetMapping("/yachak")
     public String signup(Model model) {
         model.addAttribute("yachak", new Yachak());
@@ -42,7 +45,7 @@ public class YachakRegistrationController {
 
         // save yachak
         // user--> create user
-        User user = new User();
+        Users user = new Users();
         user.setFullName(yachak.getFullName());
         user.setRole(UserRole.YACHAK);
         user.setPassword(yachak.getPassword());
@@ -52,8 +55,10 @@ public class YachakRegistrationController {
         yachakService.saveYachak(yachak);
         userService.saveUser(user);
 
+
         model.addAttribute("yssId", yssId);
         return "Registration/yachak_registered";
     }
+
 
 }

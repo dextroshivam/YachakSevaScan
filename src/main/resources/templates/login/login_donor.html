@@ -1,10 +1,454 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Login Donor </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donor Login</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header {
+            background-color: #ffd700;
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease-in;
+        }
+
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .header .logo img {
+            width: 120px;
+            border-radius: 50%;
+        }
+
+        .header .header-text h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            color: #050505;
+        }
+
+        .nav-menu ul {
+            display: flex;
+            list-style: none;
+            margin-left: 0;
+            padding: 0;
+        }
+
+        .nav-menu ul li {
+            margin: 0 15px;
+        }
+
+        .nav-menu ul li a {
+            color: #333;
+            text-decoration: none;
+            font-weight: 700;
+            transition: color 0.3s;
+            border: 1px solid black;
+            border-radius: 20%;
+            padding: 10px;
+        }
+
+        .nav-menu ul li a:hover {
+            color: #d4af37;
+            background-color: black;
+            color: white;
+        }
+
+        main {
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+
+
+        }
+
+        .login-form {
+            width: 500px;
+            height: 300px;
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #fff;
+            border: 15px solid #d4af37;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-form form {
+            display: flex;
+            flex-direction: column;
+            width: inherit;
+            height: inherit;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .form-element {
+            width: inherit;
+            display: flex;
+            align-items: center;
+        }
+
+        .login-form label {
+            margin-bottom: 5px;
+            font-weight: bold;
+            margin-left: 20px;
+            font-size: 30px;
+        }
+
+        .login-form input {
+            margin-bottom: 15px;
+            padding: 10px;
+            margin-left: 60px;
+            border-radius: 5px;
+            font-size: 20px;
+
+        }
+
+        #yssId {
+            margin-left: 100px;
+        }
+
+        .login-form button {
+            background-color: #ffd700;
+            border: none;
+            padding: 10px 15px;
+            color: #333;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .login-form button:hover {
+            background-color: #f2c700;
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 0px;
+            background-color: #ffd700;
+            padding: 20px 0;
+            text-align: center;
+            margin-top: 40px;
+            width: 100%;
+        }
+
+        .footer .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        .footer .footer-menu ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        .footer .footer-menu ul li {
+            margin: 0 15px;
+        }
+
+        .footer .footer-menu ul li a {
+            color: #333;
+            text-decoration: none;
+            font-weight: 700;
+            transition: color 0.3s;
+        }
+
+        .footer .footer-menu ul li a:hover {
+            color: #d4af37;
+        }
+
+        .footer .social-links a {
+            margin: 0 10px;
+            display: inline-block;
+        }
+
+        .footer .social-links img {
+            width: 30px;
+        }
+
+        .footer p {
+            margin: 0;
+            font-size: 1rem;
+            color: #333;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .login-card {
+            width: 300px;
+            height: 400px;
+            background-color: #ffd700;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: flex;
+            margin-left: 50px;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .login-card:hover {
+            transform: translateY(-30px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .login-card h2 {
+            font-size: 1.5rem;
+            color: #000000;
+            margin-bottom: 20px;
+        }
+
+        .login-card p {
+            font-size: 1.5rem;
+            color: #000000;
+
+            margin-bottom: 30px;
+        }
+
+        .login-card a {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #333;
+            color: #ffd700;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+            font-weight: bold;
+        }
+
+        .login-card a:hover {
+            background-color: #ffffff;
+            color: #333;
+        }
+
+        main {
+            display: flex;
+            justify-content: space-around;
+            margin-inline: auto;
+        }
+
+        .login-card {
+            margin-left: 100px;
+            margin-top: 100px;
+            background-color: #ffd700;
+        }
+
+        .login-button {
+            padding: 10px 20px;
+            background-color: #333;
+            color: #ffd700;
+            font-size: 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .login-button:hover {
+            font-size: 25px;
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        .required-label {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 4px; /* Space between label and asterisk */
+        }
+
+        .required-label:before {
+            content: '*';
+            color: rgb(1, 1, 1);
+            position: absolute;
+            left: -10px; /* Adjust positioning as needed */
+            top: 0;
+        }
+
+        .pendulum {
+            position: absolute;
+            left: 20%;
+        }
+
+        .pendulum_box {
+            display: flex;
+            padding: 120px 0 0 10px;
+            position: absolute;
+            flex: 1;
+        }
+
+        .ball {
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+            background-color: #FF5C35;
+            position: relative;
+            transform-origin: 50% -300%;
+        }
+
+        .ball.first {
+            animation: firstball .9s alternate ease-in infinite;
+        }
+
+        @keyframes firstball {
+            0% {
+                transform: rotate(35deg);
+            }
+            50% {
+                transform: rotate(0deg);
+            }
+        }
+
+        .ball.last {
+            animation: lastball .9s alternate ease-out infinite;
+        }
+
+        @keyframes lastball {
+            50% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(-35deg);
+            }
+        }
+
+    </style>
 </head>
-<body>
-<h1>Login Donor</h1>
+<body id="body">
+<header class="header">
+    <div class="container">
+        <div class="logo">
+            <img
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7SgcUDZXu9F07FZT4BVNAygtBYS8CGzW_sk5GNeZGKIPmo0DZ4B5S-E4HZydBPyRrLY4&usqp=CAU"
+                    alt="Yachak Seva Scan">
+        </div>
+        <div class="header-text">
+            <h1>Donor Login</h1>
+        </div>
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="#" th:href="@{/}">Home</a></li>
+                <li><a href="#" th:href="@{/public/about}">About
+                    Us</a></li>
+                <li><a href="#"
+                       th:href="@{/public/contact}">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main>
+    <div class="login-card">
+        <h2>Not registered yet?</h2>
+        <p>Register now to start your journey as a donor!</p>
+        <a href="#" th:href="@{/register/donor}">Register Now</a>
+    </div>
+    <div class="login-form">
+        <form id="loginForm" th:action="@{/login/donorLoggedIn}" method="post"
+              th:object="${donorLoginDEC}">
+            <div class="form-element form-element-yssId">
+                <label class="required-label" for="yssId">YSS ID:</label>
+                <input type="text" id="yssId" name="yssId"
+                       th:value="${donorLoginDEC.getYssId()}" required>
+                <div id="yssIdMessage" style="color: red;"></div>
+            </div>
+            <div class="form-element">
+                <label class="required-label"
+                       for="password">Password:</label>
+                <input type="password" id="password" name="password"
+                       required>
+                <div id="passwordMessage" style="color: red;"></div>
+            </div>
+            <div>
+                <button type="submit"
+                        class="login-button">Login
+                </button>
+            </div>
+        </form>
+    </div>
+
+
+</main>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-menu">
+            <ul>
+                <li><a href="#" th:href="@{/public/privacy}">Privacy
+                    Policy</a></li>
+                <li><a href="#" th:href="@{/public/terms}">Terms of
+                    Service</a></li>
+                <li><a href="#"
+                       th:href="@{/public/support}">Support</a></li>
+            </ul>
+        </div>
+        <div class="social-links">
+            <a href="#" target="_blank"><img
+                    src="https://cdn1.iconfinder.com/data/icons/social-media-rounded-corners/512/Rounded_Facebook_svg-64.png"
+                    alt="Facebook"></a>
+            <a href="#" target="_blank"><img
+                    src="https://cdn1.iconfinder.com/data/icons/social-media-rounded-corners/512/Rounded_Twitter5_svg-64.png"
+                    alt="Twitter"></a>
+            <a href="#" target="_blank"><img
+                    src="https://cdn3.iconfinder.com/data/icons/social-round-corner/512/linkdin__social_media_logo-64.png"
+                    alt="LinkedIn"></a>
+        </div>
+        <p>&copy; 2024 Yachak Seva Scan. All rights reserved.</p>
+    </div>
+</footer>
+
+<script>
+    document.getElementById('loginForm').addEventListener('submit', function (event) {
+        let yssId = document.getElementById('yssId').value;
+        let password = document.getElementById('password').value;
+
+        let yssIdMessage = document.getElementById('yssIdMessage');
+        let passwordMessage = document.getElementById('passwordMessage');
+
+        yssIdMessage.innerHTML = '';
+        passwordMessage.innerHTML = '';
+
+        if (yssId === '') {
+            event.preventDefault();
+            yssIdMessage.innerHTML = 'Email is required';
+        }
+
+        if (password === '') {
+            event.preventDefault();
+            passwordMessage.innerHTML = 'Password is required';
+        }
+    });
+</script>
 </body>
 </html>

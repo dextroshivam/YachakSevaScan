@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yachak Registration</title>
+    <title>User Login</title>
     <style>
         body {
             font-family: 'Poppins', sans-serif;
@@ -67,42 +67,62 @@
             color: white;
         }
 
-        .registration-form {
+        main {
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+
+
+        }
+
+        .login-form {
+            width: 500px;
+            height: 300px;
             max-width: 600px;
             margin: 40px auto;
             padding: 20px;
             background: #fff;
+            border: 15px solid #d4af37;
             border-radius: 8px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
-        .registration-form form {
+        .login-form form {
             display: flex;
             flex-direction: column;
+            width: inherit;
+            height: inherit;
+            justify-content: space-around;
+            align-items: center;
         }
 
-        .registration-form label {
+        .form-element {
+            width: inherit;
+            display: flex;
+            align-items: center;
+        }
+
+        .login-form label {
             margin-bottom: 5px;
             font-weight: bold;
+            margin-left: 20px;
+            font-size: 30px;
         }
 
-        .registration-form input,
-        .registration-form textarea {
+        .login-form input {
             margin-bottom: 15px;
             padding: 10px;
-            border: 1px solid #ddd;
+            margin-left: 60px;
             border-radius: 5px;
+            font-size: 20px;
+
         }
 
-        .registration-form .consent-checkbox {
-            margin-bottom: 15px;
+        #yssId {
+            margin-left: 100px;
         }
 
-        .registration-form .consent-checkbox input {
-            margin-right: 10px;
-        }
-
-        .registration-form button {
+        .login-form button {
             background-color: #ffd700;
             border: none;
             padding: 10px 15px;
@@ -113,11 +133,13 @@
             transition: background-color 0.3s;
         }
 
-        .registration-form button:hover {
+        .login-form button:hover {
             background-color: #f2c700;
         }
 
         .footer {
+            position: absolute;
+            bottom: 0px;
             background-color: #ffd700;
             padding: 20px 0;
             text-align: center;
@@ -187,6 +209,7 @@
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             display: flex;
+            margin-left: 50px;
             flex-direction: column;
             align-items: center;
             justify-content: center;
@@ -272,9 +295,57 @@
             left: -10px; /* Adjust positioning as needed */
             top: 0;
         }
+
+        .pendulum {
+            position: absolute;
+            left: 20%;
+        }
+
+        .pendulum_box {
+            display: flex;
+            padding: 120px 0 0 10px;
+            position: absolute;
+            flex: 1;
+        }
+
+        .ball {
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+            background-color: #FF5C35;
+            position: relative;
+            transform-origin: 50% -300%;
+        }
+
+        .ball.first {
+            animation: firstball .9s alternate ease-in infinite;
+        }
+
+        @keyframes firstball {
+            0% {
+                transform: rotate(35deg);
+            }
+            50% {
+                transform: rotate(0deg);
+            }
+        }
+
+        .ball.last {
+            animation: lastball .9s alternate ease-out infinite;
+        }
+
+        @keyframes lastball {
+            50% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(-35deg);
+            }
+        }
+
     </style>
 </head>
-<body>
+<body id="body">
 <header class="header">
     <div class="container">
         <div class="logo">
@@ -283,7 +354,7 @@
                     alt="Yachak Seva Scan">
         </div>
         <div class="header-text">
-            <h1>Yachak Registration</h1>
+            <h1>User Login</h1>
         </div>
         <nav class="nav-menu">
             <ul>
@@ -298,66 +369,37 @@
 </header>
 
 <main>
-
     <div class="login-card">
-        <h2>Already registered?</h2>
-        <p>Click the button below to login.</p>
-        <button class="login-button" onclick="redirectToLogin()">Login Now
-        </button>
+        <h2>Not registered yet?</h2>
+        <p>Register now to start your journey!</p>
+        <a href="#" th:href="@{/public/home}">Register Now</a>
     </div>
-    <div class="registration-form">
-        <form id="yachakForm" action th:action="@{/register/yachakRegistered}"
-              method="post" th:object="${yachak}" onsubmit="activeLoader()">
-            <label for="fullName" class="required-label">Full Name:</label>
-            <input type="text" id="fullName" name="fullName" required
-                   th:value="${yachak.fullName}">
+    <div class="login-form">
 
-            <!--            <label for="email">Email Address:</label>-->
-            <!--            <input type="email" id="email" name="email" required-->
-            <!--                   th:value="${yachak.email}">-->
-
-            <!--            <label for="phoneNumber">Phone Number:</label>-->
-            <!--            <input type="tel" id="phoneNumber" name="phoneNumber"-->
-            <!--                   required th:value="${yachak.phoneNumber}">-->
-            <!--            private String address;  // Optional, to know where they usually stay-->
-            <!--            private String healthCondition; // Optional, to help identify the Yachak-->
-            <!--            private String uniqueSign;-->
-
-            <label for="address" class="required-label">Address:</label>
-            <textarea id="address" name="address" rows="4"
-                      th:value="${yachak.address}" required></textarea>
-
-            <label for="dob">Date of Birth:</label>
-            <input type="date" id="dob" name="dob"
-                   th:value="${yachak.dob}">
-
-            <label for="healthCondition">Health Condition:</label>
-            <input type="text" id="healthCondition" name="healthCondition"
-                   th:value="${yachak.healthCondition}">
-
-            <label for="uniqueSign">Unique Sign:</label>
-            <input type="text" id="uniqueSign" name="uniqueSign"
-                   th:value="${yachak.uniqueSign}">
-
-            <label for="password" class="required-label">Password:</label>
-            <input type="password" id="password" name="password"
-                   required>
-
-            <div class="consent-checkbox">
-                <input type="checkbox" id="consent" name="consent"
-                       required>
-                <label for="consent">I acknowledge that I have read and
-                    agree to the <a href="/public/privacy">Privacy
-                        Policy</a> and <a href="/public/terms">Terms of
-                        Service</a>.</label>
+        <form id="loginForm" th:action="@{/login/userLoggedIn}" method="post" th:object="${LoginDEC}">
+            <h2 id="loginErrorMessage" th:value="${LoginDEC.getLoginError()}"></h2>
+            <div class="form-element form-element-yssId">
+                <label class="required-label" for="yssId">YSS ID:</label>
+                <input type="text" id="yssId" name="yssId"
+                       th:value="${LoginDEC.getYssId()}" required>
+                <div id="yssIdMessage" style="color: red;"></div>
             </div>
-
-            <button type="submit" style="color: black">Register</button>
-            <button type="reset"
-                    style="background-color: red; margin-top: 10px;color: black">Reset
-            </button>
+            <div class="form-element">
+                <label class="required-label"
+                       for="password">Password:</label>
+                <input type="password" id="password" name="password"
+                       required>
+                <div id="passwordMessage" style="color: red;"></div>
+            </div>
+            <div>
+                <button type="submit"
+                        class="login-button">Login
+                </button>
+            </div>
         </form>
     </div>
+
+
 </main>
 
 <footer class="footer">
@@ -386,29 +428,28 @@
         <p>&copy; 2024 Yachak Seva Scan. All rights reserved.</p>
     </div>
 </footer>
+
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        // Add an event listener to the form submission
-        document.getElementById('yachakForm').addEventListener('submit', function (event) {
-            // Check if the checkbox is checked
-            const consentCheckbox = document.getElementById('consent');
-            if (!consentCheckbox.checked) {
-                // Prevent form submission if the checkbox is not checked
-                alert('You must acknowledge the terms and privacy policy to proceed.');
-                event.preventDefault();
-            }
-        });
+    document.getElementById('loginForm').addEventListener('submit', function (event) {
+        let yssId = document.getElementById('yssId').value;
+        let password = document.getElementById('password').value;
+        let yssIdMessage = document.getElementById('yssIdMessage');
+        let passwordMessage = document.getElementById('passwordMessage');
+
+        yssIdMessage.innerHTML = '';
+        passwordMessage.innerHTML = '';
+
+        if (yssId === '') {
+            event.preventDefault();
+            yssIdMessage.innerHTML = 'Email is required';
+        }
+
+        if (password === '') {
+            event.preventDefault();
+            passwordMessage.innerHTML = 'Password is required';
+        }
+
     });
-
-    function activeLoader() {
-        var submitbtn = document.getElementById("submit");
-        submitbtn.style.display = "none";
-    }
-
-    function redirectToLogin() {
-        window.location.href = '/login/yachak';
-    }
 </script>
-
 </body>
 </html>

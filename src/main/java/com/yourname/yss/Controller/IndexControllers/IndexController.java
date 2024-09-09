@@ -10,6 +10,6 @@ public class IndexController {
 
     @GetMapping("/home")
     public String home() {
-        return "Index/index";
+        return "index";
     }
 }

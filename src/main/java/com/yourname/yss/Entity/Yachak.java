@@ -1,5 +1,6 @@
 package com.yourname.yss.Entity;
 
+import com.yourname.yss.Enum.UserRole;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -36,7 +37,9 @@ public class Yachak {
     private String address;  // Optional, to know where they usually stay
     private String healthCondition; // Optional, to help identify the Yachak
     private String uniqueSign;          // Optional, any unique characteristic or sign for identification
-//    private String photoUrl;
+    //    private String photoUrl;
+    @Enumerated(EnumType.STRING)
+    private UserRole role = UserRole.YACHAK;
 
 //    @OneToMany(mappedBy = "yachak")
 //    private Set<Transaction> transactions;

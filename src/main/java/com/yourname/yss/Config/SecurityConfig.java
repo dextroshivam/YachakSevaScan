@@ -5,27 +5,23 @@ package com.yourname.yss.Config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
-//
-//    @Autowired
-//    private CustomUserDetailsService userDetailsService;
+
+    @Autowired
+    private UserDetailsServiceImpl userDetailsService;
+    @Autowired
+    private CustomAuthenticationSuccessHandler successHandler;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -33,16 +29,16 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
-                                .requestMatchers("/yachaks/**").hasRole("YACHAK")
-                                .requestMatchers("/donors/**").hasRole("DONOR")
-                                .requestMatchers("/super-admin/**").hasRole("SUPER_ADMIN")
+                                .requestMatchers("/yachak/**").hasRole("YACHAK")
+                                .requestMatchers("/donor/**").hasRole("DONOR")
+                                .requestMatchers("/superadmin/**").hasRole("SUPER_ADMIN")
                                 .requestMatchers("/public/**", "/register/**", "/login/**", "/", "/home").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .formLogin(formLogin ->
                         formLogin
-                                .loginPage("/login")
-                                .permitAll()
+                                .loginPage("/login/user").permitAll()
+                                .successHandler(successHandler)
                 )
                 .logout(logout ->
                         logout
@@ -53,8 +49,16 @@ public class SecurityConfig {
         return http.build();
     }
 
+    @Bean
+    public AuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+        authProvider.setPasswordEncoder(passwordEncoder());
+        authProvider.setUserDetailsService(userDetailsService);
+        return authProvider;
+    }
+
 //    @Bean
-//    public UserDetailsService userDetailsService() {
+//    public UserDetailsService getUserDetailsService() {
 ////        PasswordEncoder encoder = new BCryptPasswordEncoder();
 ////
 ////        UserDetails user = User.builder()
@@ -69,16 +73,18 @@ public class SecurityConfig {
 
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
+//
 //    @Bean
 //    public DaoAuthenticationProvider authenticationProvider() {
 //        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-//        authProvider.setUserDetailsService(userDetailsService);
+//        authProvider.setUserDetailsService(this.getUserDetailsService());
 //        authProvider.setPasswordEncoder(passwordEncoder());
 //        return authProvider;
 //    }
+
+
 }
 

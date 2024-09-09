@@ -1,17 +1,13 @@
 package com.yourname.yss.Service;
 
-import com.yourname.yss.DTO.RequestDTO.UserRequestDTO;
-import com.yourname.yss.DTO.ResponseDTO.UserResponseDTO;
-import com.yourname.yss.Entity.Donor;
-import com.yourname.yss.Entity.User;
-import org.springframework.ui.Model;
-
-import java.util.Optional;
+import com.yourname.yss.Entity.Users;
 
 public interface UserService {
 
 
-    User saveUser(User user);
+    Users saveUser(Users user);
+
+    boolean authenticateUser(String yssId, String password);
 
 
 //    Optional<User> getUserById(Long userId);
